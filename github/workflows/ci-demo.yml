@@ -1,0 +1,42 @@
+name: CI Demo
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show Git info
+        run: |
+          echo "Repo: $GITHUB_REPOSITORY"
+          echo "Commit: $GITHUB_SHA"
+          uname -a
+          lsb_release -a || true
+
+      - name: List files
+        run: |
+          echo "Listing repository files..."
+          ls -la
+
+      - name: Show README
+        run: |
+          echo "Contenido de README.md:"
+          if [ -f README.md ]; then
+            sed -n '1,200p' README.md || true
+          else
+            echo "No existe README.md"
+          fi
+
+      - name: Run a simple test (simulated)
+        run: |
+          echo "Corriendo pruebas de ejemplo..."
+          # Simulamos una prueba que pasa:
+          exit 0
